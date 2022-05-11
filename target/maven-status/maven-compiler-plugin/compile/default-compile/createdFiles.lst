@@ -1,4 +1,5 @@
 comp8031/WebSocket.class
 comp8031/model/MessageEncoder.class
 comp8031/model/MessageDecoder.class
+comp8031/model/TransactionStatus.class
 comp8031/model/Message.class
