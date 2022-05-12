@@ -5,7 +5,9 @@ public enum TransactionStatus {
     TransactionEnd("Transaction End"),
     TransactionComlete("Transaction Complete"),
     DeviceDisconnected("Device Disconnected");
+
     private String name;
+
     TransactionStatus(String name) {
         this.name = name;
     }

@@ -6,7 +6,7 @@ public class Message {
 
     public Message() {}
 
-    public Message(String string) {
+    public Message(String content) {
         this.content = content;
     }
 
@@ -17,5 +17,9 @@ public class Message {
     public void setContent(String content) {
         this.content = content;
     }
-  
+    
+    @Override
+    public String toString() {
+        return String.format("Content: %s", content);
+    }
 }
