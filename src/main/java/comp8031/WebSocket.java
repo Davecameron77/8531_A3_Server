@@ -40,7 +40,7 @@ public class WebSocket {
 
     private static void broadcaset(Message message, Session session) {
         try{
-            System.out.println(message.getContent());
+            System.out.println(message.toString());
             connection.stream()
                     .collect(Collectors.toList())
                     .get(0)
@@ -58,6 +58,7 @@ public class WebSocket {
     @OnMessage
     public void onMessage(String string, Session session) throws IOException, DecodeException {
         MessageDecoder messageDecoder = new MessageDecoder();
+        System.out.println(string);
         Message message = messageDecoder.decode(string);
         broadcaset(message, session);
     }
@@ -69,7 +70,7 @@ public class WebSocket {
 
     @OnClose
     public void onClose(Session session) {
-        Message message = new Message(TransactionStatus.DeviceDisconnected.toString());
+        Message message = new Message();
         this.users.removeIf(user -> user.equals(session.getId())); 
         broadcaset(message, session);
     }
