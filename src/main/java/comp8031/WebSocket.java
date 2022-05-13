@@ -28,8 +28,8 @@ public class WebSocket {
 
     public WebSocket() {
         users = new ArrayList<>(QUORUM);
-    }    
-      
+    }
+
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
@@ -38,9 +38,9 @@ public class WebSocket {
         System.out.printf("New User gets connected %s \n",session.getId());
     }
 
-    private static void broadcaset(Message message, Session session) {
+    private static void broadcast(Message message, Session session) {
         try{
-            System.out.println(message.getContent());
+            System.out.println("Broadcasting message with ID: " + message.getTransactionId().toString());
             connection.stream()
                     .collect(Collectors.toList())
                     .get(0)
@@ -48,7 +48,7 @@ public class WebSocket {
         }catch (IOException | EncodeException exc ) {
             System.out.println(exc.getLocalizedMessage());
         }
-        
+
     }
 
     public Session getSession() {
@@ -59,7 +59,7 @@ public class WebSocket {
     public void onMessage(String string, Session session) throws IOException, DecodeException {
         MessageDecoder messageDecoder = new MessageDecoder();
         Message message = messageDecoder.decode(string);
-        broadcaset(message, session);
+        broadcast(message, session);
     }
 
     @OnError
@@ -69,9 +69,10 @@ public class WebSocket {
 
     @OnClose
     public void onClose(Session session) {
-        Message message = new Message(TransactionStatus.DeviceDisconnected.toString());
-        this.users.removeIf(user -> user.equals(session.getId())); 
-        broadcaset(message, session);
+        System.out.println("Channel closing for " + session.getId());
+        // Message message = new Message(TransactionStatus.DeviceDisconnected.toString());
+        // this.users.removeIf(user -> user.equals(session.getId()));
+        // broadcast(message, session);
     }
 
-} 
+}
